@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "514320744870",
+    "project_id": "onee-c0b3a",
+    "storage_bucket": "onee-c0b3a.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514320744870:android:03ca877a623480af900f67",
+        "android_client_info": {
+          "package_name": "com.example.onee_uapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30uGpgpgwYrsZdJcjIANg9-cJPJlkDkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:514320744870:android:84162f956dc53bd5900f67",
+        "android_client_info": {
+          "package_name": "com.example.onee_wapp"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC30uGpgpgwYrsZdJcjIANg9-cJPJlkDkw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

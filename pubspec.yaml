@@ -1,0 +1,56 @@
+name: onee_wapp
+description: "Onee Worker app — receive job offers with phone OTP authentication."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.11.1
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  get: ^4.7.2
+  dio: ^5.9.0
+  flutter_secure_storage: ^9.2.4
+  flutter_dotenv: ^5.2.1
+  image_picker: ^1.1.2
+  cached_network_image: ^3.4.1
+  pin_code_fields: ^8.0.1
+  google_fonts: ^6.2.1
+  flutter_map: ^7.0.2
+  latlong2: ^0.9.1
+  geolocator: ^13.0.2
+  signalr_netcore: ^1.3.9
+  firebase_core: ^3.8.1
+  firebase_messaging: ^15.1.6
+  jwt_decoder: ^2.0.1
+  intl: ^0.20.2
+  flutter_local_notifications: ^22.2.0
+  audioplayers: ^6.7.1
+  shared_preferences: ^2.5.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+  flutter_launcher_icons: ^0.14.4
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  image_path: assets/images/Logo.png
+  adaptive_icon_background: "#FFFFFF"
+  adaptive_icon_foreground: assets/images/Logo.png
+  remove_alpha_ios: true
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - .env
+    - assets/images/Logo.png
+    - assets/images/Logo_splash.png
+    - assets/images/default_worker.png
+    - assets/sounds/job_offer_ring.wav
