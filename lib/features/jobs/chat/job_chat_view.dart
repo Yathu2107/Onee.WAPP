@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import '../../../app/theme/app_colors.dart';
 import '../../../common_widgets/empty_state.dart';
 import '../../../common_widgets/onee_loader.dart';
+import '../../../common_widgets/profile_image_avatar.dart';
 import '../model/job_models.dart';
 import 'job_chat_controller.dart';
 
@@ -20,6 +21,7 @@ class JobChatView extends GetView<JobChatController> {
           Obx(
             () => _ChatHeader(
               customerName: controller.customerName.value,
+              customerImageUrl: controller.customerImageUrl.value,
               category: controller.jobCategory.value,
               jobId: controller.jobId,
             ),
@@ -95,11 +97,13 @@ class JobChatView extends GetView<JobChatController> {
 class _ChatHeader extends StatelessWidget {
   const _ChatHeader({
     required this.customerName,
+    required this.customerImageUrl,
     required this.category,
     required this.jobId,
   });
 
   final String customerName;
+  final String? customerImageUrl;
   final String category;
   final int jobId;
 
@@ -129,21 +133,11 @@ class _ChatHeader extends StatelessWidget {
               icon: const Icon(Icons.arrow_back_rounded),
               color: AppColors.nearBlack,
             ),
-            Container(
-              width: 44,
-              height: 44,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.gold.withValues(alpha: 0.55),
-                ),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/default_worker.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
+            ProfileImageAvatar(
+              imageUrl: customerImageUrl,
+              size: 44,
+              borderColor: AppColors.gold.withValues(alpha: 0.55),
+              borderWidth: 1,
             ),
             const SizedBox(width: 12),
             Expanded(

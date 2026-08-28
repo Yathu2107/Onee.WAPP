@@ -27,6 +27,7 @@ class JobChatController extends GetxController {
   final error = RxnString();
   final currentUserId = ''.obs;
   final customerName = 'Customer'.obs;
+  final customerImageUrl = RxnString();
   final jobCategory = ''.obs;
   final jobStatus = RxnString();
   final canCompose = false.obs;
@@ -80,6 +81,7 @@ class JobChatController extends GetxController {
       customerName.value = job.customerName?.trim().isNotEmpty == true
           ? job.customerName!.trim()
           : 'Customer';
+      customerImageUrl.value = job.customerImageUrl;
       jobCategory.value = job.categoryName?.trim() ?? '';
       jobStatus.value = job.status;
       canCompose.value = JobStatuses.canChat(job.status);
@@ -119,6 +121,7 @@ class JobChatController extends GetxController {
       if (detail.customerName?.trim().isNotEmpty == true) {
         customerName.value = detail.customerName!.trim();
       }
+      customerImageUrl.value = detail.customerImageUrl;
     });
   }
 

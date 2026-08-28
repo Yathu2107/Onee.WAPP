@@ -4,11 +4,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
+import 'package:jwt_decoder/jwt_decoder.dart';
 
 import '../../app/routes/app_routes.dart';
 import '../../features/auth/repository/auth_repository.dart';
 import '../../features/jobs/offer/job_offer_alert_service.dart';
 import '../notifications/local_notification_service.dart';
+import '../storage/secure_storage_service.dart';
 import '../notifications/pending_job_offer_store.dart';
 
 bool _isJobOfferType(String? type) {
@@ -73,6 +75,7 @@ class FcmService extends GetxService {
   String get platform => Platform.isIOS ? 'ios' : 'android';
 
   bool _ready = false;
+  String? _currentUserId;
 
   Future<void> init() async {
     try {
@@ -94,6 +97,7 @@ class FcmService extends GetxService {
 
       _token = await messaging.getToken();
       _ready = true;
+      await _loadCurrentUserId();
 
       FirebaseMessaging.onMessage.listen(_onForegroundMessage);
       FirebaseMessaging.onMessageOpenedApp.listen(_handleMessage);
@@ -147,15 +151,16 @@ class FcmService extends GetxService {
   }
 
   void _onForegroundMessage(RemoteMessage message) {
-    final title =
-        message.notification?.title ?? message.data['title']?.toString();
-    final body =
-        message.notification?.body ?? message.data['body']?.toString();
+    final type = (message.data['type']?.toString() ?? '').trim().toLowerCase();
 
     final jobIdRaw =
         message.data['jobId'] ?? message.data['fk_job_ID'] ?? message.data['job_id'];
     final jobId = int.tryParse(jobIdRaw?.toString() ?? '');
-    final type = (message.data['type']?.toString() ?? '').trim().toLowerCase();
+
+    if (type == 'chat_message' || type == 'chat') {
+      final senderId = message.data['senderId']?.toString() ?? '';
+      if (_isCurrentUser(senderId)) return;
+    }
 
     if (_isJobOfferType(type) &&
         jobId != null &&
@@ -167,6 +172,11 @@ class FcmService extends GetxService {
       );
       return;
     }
+
+    final title =
+        message.notification?.title ?? message.data['title']?.toString();
+    final body =
+        message.notification?.body ?? message.data['body']?.toString();
 
     if (title == null && body == null) return;
 
@@ -185,6 +195,29 @@ class FcmService extends GetxService {
         type: type,
       );
     }
+  }
+
+  Future<void> _loadCurrentUserId() async {
+    try {
+      if (!Get.isRegistered<SecureStorageService>()) return;
+      final token = await Get.find<SecureStorageService>().getToken();
+      if (token == null || token.isEmpty) return;
+      final decoded = JwtDecoder.decode(token);
+      _currentUserId = (decoded['uid']?.toString() ??
+              decoded['sub']?.toString() ??
+              decoded['nameid']?.toString() ??
+              '')
+          .trim();
+    } catch (_) {
+      _currentUserId = null;
+    }
+  }
+
+  bool _isCurrentUser(String? userId) {
+    final uid = _currentUserId?.trim() ?? '';
+    final other = userId?.trim() ?? '';
+    if (uid.isEmpty || other.isEmpty) return false;
+    return uid.toLowerCase() == other.toLowerCase();
   }
 
   void _handleMessage(RemoteMessage message) {
