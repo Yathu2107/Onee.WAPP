@@ -11,12 +11,19 @@ class CategoryItem {
 
   factory CategoryItem.fromJson(Map<String, dynamic> json) {
     return CategoryItem(
-      id: JsonHelpers.pickInt(json, ['id', 'Id', 'categoryId', 'CategoryId']) ??
+      id: JsonHelpers.pickInt(json, [
+            'id',
+            'Id',
+            'category_id',
+            'Category_id',
+            'categoryId',
+            'CategoryId',
+          ]) ??
           0,
       categoryName: JsonHelpers.pickString(json, [
+            'category_Name',
             'categoryName',
             'CategoryName',
-            'category_Name',
             'name',
             'Name',
           ]) ??
@@ -37,6 +44,8 @@ class WorkerCategoryItem {
   factory WorkerCategoryItem.fromJson(Map<String, dynamic> json) {
     return WorkerCategoryItem(
       categoryId: JsonHelpers.pickInt(json, [
+            'category_id',
+            'Category_id',
             'categoryId',
             'CategoryId',
             'id',
@@ -46,9 +55,9 @@ class WorkerCategoryItem {
           ]) ??
           0,
       categoryName: JsonHelpers.pickString(json, [
+            'category_Name',
             'categoryName',
             'CategoryName',
-            'category_Name',
             'name',
             'Name',
           ]) ??

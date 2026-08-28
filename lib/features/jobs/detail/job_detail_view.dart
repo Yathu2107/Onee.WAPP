@@ -9,6 +9,7 @@ import '../../../common_widgets/empty_state.dart';
 import '../../../common_widgets/job_status_chip.dart';
 import '../../../common_widgets/onee_loader.dart';
 import '../../../common_widgets/primary_button.dart';
+import '../../../common_widgets/profile_image_avatar.dart';
 import '../../../utils/job_statuses.dart';
 import '../model/job_models.dart';
 import 'job_detail_controller.dart';
@@ -388,22 +389,9 @@ class _CustomerCard extends StatelessWidget {
         ),
         child: Row(
           children: [
-            Container(
-              width: 52,
-              height: 52,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                border: Border.all(
-                  color: AppColors.gold.withValues(alpha: 0.5),
-                  width: 1.5,
-                ),
-              ),
-              child: ClipOval(
-                child: Image.asset(
-                  'assets/images/default_worker.png',
-                  fit: BoxFit.cover,
-                ),
-              ),
+            ProfileImageAvatar(
+              imageUrl: job.customerImageUrl,
+              size: 52,
             ),
             const SizedBox(width: 12),
             Expanded(

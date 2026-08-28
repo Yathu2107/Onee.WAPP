@@ -16,6 +16,7 @@ class SelectSkillsBinding extends Bindings {
 
     Get.lazyPut<SelectSkillsController>(
       () => SelectSkillsController(Get.find<CategoryRepository>()),
+      fenix: true,
     );
   }
 }
